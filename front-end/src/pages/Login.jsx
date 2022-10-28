@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
@@ -8,18 +9,21 @@ function Login() {
   const [loginBtn, setLoginBtn] = useState(true);
   const [isUserValid, setIsUserValid] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
-  const submitLogin = async (e) => {
+  const submitLogin = async () => {
     try {
-      e.preventDefault();
       await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
       setIsUserValid(true);
+      navigate('/customer/products');
     } catch (error) {
-      setMessage(error.response.data.message);
-      setIsUserValid(false);
+      if (error.response.data.message) {
+        setMessage(error.response.data.message);
+        setIsUserValid(false);
+      }
     }
   };
 
@@ -40,7 +44,7 @@ function Login() {
 
   useEffect(() => {
     setLoginBtn(!isEmailValid(email) || !isPwValid(password));
-  }, [email, password, invalidEmail]);
+  }, [email, password, invalidEmail, isUserValid]);
 
   return (
     <div>
@@ -63,10 +67,10 @@ function Login() {
         />
       </label>
       <button
-        type="button"
+        type="submit"
         data-testid="common_login__button-login"
         disabled={ loginBtn }
-        onClick={ (e) => submitLogin(e) }
+        onClick={ () => submitLogin() }
       >
         Login
       </button>
@@ -79,7 +83,7 @@ function Login() {
       </button>
 
       {!isUserValid
-      && <p data-testid="common_login__element-invalid-email">{ message }</p>}
+        && <p data-testid="common_login__element-invalid-email">{ message }</p>}
     </div>
   );
 }
