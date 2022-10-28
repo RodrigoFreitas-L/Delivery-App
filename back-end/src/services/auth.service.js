@@ -1,7 +1,7 @@
+const md5 = require('md5');
 const { User } = require('../database/models');
 const { generateJwtToken } = require('../utils/jwt');
 const error = require('../utils/error');
-const md5 = require('md5');
 
 const authenticate = async ({ email, password }) => {
   const user = await User.findOne({
@@ -17,7 +17,7 @@ const authenticate = async ({ email, password }) => {
     name: user.name,
     email: user.email,
     role: user.role,
-  }
+  };
 
   return generateJwtToken(userResult);
 };
