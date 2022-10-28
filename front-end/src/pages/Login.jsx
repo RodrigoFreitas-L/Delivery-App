@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [password, setPassword] = useState('');
   const [loginBtn, setLoginBtn] = useState(true);
+  const [isUserValid, setIsUserValid] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const submitLogin = async (e) => {
+    try {
+      e.preventDefault();
+      await axios.post('http://localhost:3001/login', {
+        email,
+        password,
+      });
+      setIsUserValid(true);
+    } catch (error) {
+      setMessage(error.response.data.message);
+      setIsUserValid(false);
+    }
+  };
 
   const isEmailValid = (value) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,6 +66,7 @@ function Login() {
         type="button"
         data-testid="common_login__button-login"
         disabled={ loginBtn }
+        onClick={ (e) => submitLogin(e) }
       >
         Login
       </button>
@@ -60,8 +78,8 @@ function Login() {
 
       </button>
 
-      {invalidEmail
-        ? '' : <p data-testid="common_login__element-invalid-email">Invalid Email</p> }
+      {!isUserValid
+      && <p data-testid="common_login__element-invalid-email">{ message }</p>}
     </div>
   );
 }
