@@ -17,13 +17,42 @@ function Products() {
     <div>
       <Header />
       { products.map((item) => (
-        <div
-          key={ item.id }
-          data-testid={ `customer_products__element-card-price-${item.id}` }
-        >
-          <p>{item.name}</p>
-          <p>{item.price}</p>
-          <img src={ item.urlImage } alt={ item.name } />
+        <div key={ item.id }>
+          <p
+            data-testid={ `customer_products__element-card-title-${item.id}` }
+          >
+            {item.name}
+
+          </p>
+          <p
+            data-testid={ `customer_products__element-card-price-${item.id}` }
+          >
+            {item.price}
+
+          </p>
+          <img
+            data-testid={ `customer_products__img-card-bg-image-${item.id}` }
+            src={ item.urlImage }
+            alt={ item.name }
+          />
+          <button
+            data-testid={ `customer_products__button-card-add-item-${item.id}` }
+            type="button"
+          >
+            +
+
+          </button>
+          <input
+            data-testid={ `customer_products__input-card-quantity-${item.id}` }
+            type="number"
+          />
+          <button
+            data-testid={ `customer_products__button-card-rm-item-${item.id}` }
+            type="button"
+          >
+            -
+
+          </button>
         </div>
       )) }
     </div>
