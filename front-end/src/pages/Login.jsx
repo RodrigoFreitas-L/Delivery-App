@@ -54,6 +54,7 @@ function Login() {
     <div>
       <label htmlFor="loginEmail">
         <input
+          placeholder="Email"
           type="email"
           data-testid="common_login__input-email"
           id="loginEmail"
@@ -63,7 +64,8 @@ function Login() {
       </label>
       <label htmlFor="loginPw">
         <input
-          type="text"
+          placeholder="Password"
+          type="password"
           data-testid="common_login__input-password"
           id="loginPw"
           value={ password }
