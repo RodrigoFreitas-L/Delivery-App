@@ -5,7 +5,7 @@ const authService = require('../services/auth.service');
 
 router.post('/', async (req, res) => {
   const token = await authService.authenticate(req.body);
-  return res.status(201).json(token);
+  return res.status(200).json(token);
 });
 
 module.exports = router;

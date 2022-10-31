@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import api from '../services/api';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -9,20 +9,22 @@ function Login() {
   const [loginBtn, setLoginBtn] = useState(true);
   const [isUserValid, setIsUserValid] = useState(false);
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const submitLogin = async () => {
     try {
-      await axios.post('http://localhost:3001/login', {
+      const response = await api.post('/login', {
         email,
         password,
       });
       setIsUserValid(true);
-      navigate('/customer/products');
+      history.push('/customer/products');
+      console.log(response.data);
     } catch (error) {
       if (error.response.data.message) {
         setMessage(error.response.data.message);
         setIsUserValid(false);
+        console.log(error.response);
       }
     }
   };
@@ -31,6 +33,7 @@ function Login() {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === '' || regex.test(value)) {
       setInvalidEmail(true);
+
       return true;
     }
     setInvalidEmail(false);
@@ -42,6 +45,7 @@ function Login() {
     return value.length >= minLength;
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setLoginBtn(!isEmailValid(email) || !isPwValid(password));
   }, [email, password, invalidEmail, isUserValid]);
@@ -59,7 +63,7 @@ function Login() {
       </label>
       <label htmlFor="loginPw">
         <input
-          type="password"
+          type="text"
           data-testid="common_login__input-password"
           id="loginPw"
           value={ password }
@@ -77,13 +81,13 @@ function Login() {
       <button
         type="button"
         data-testid="common_login__button-register"
+        onClick={ () => history.push('/register') }
       >
         Register
-
       </button>
 
       {!isUserValid
-        && <p data-testid="common_login__element-invalid-email">{ message }</p>}
+        && <p data-testid="common_login__element-invalid-email">{message}</p>}
     </div>
   );
 }
