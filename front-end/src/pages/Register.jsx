@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import api from '../services/api';
 
 function Register() {
   const [isUserValid, setIsUserValid] = useState(false);
@@ -8,15 +10,17 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const history = useHistory();
 
   const submitRegister = async () => {
     try {
       const response = await api.post('/register', {
         email,
         password,
+        name,
       });
       setIsUserValid(true);
-      // history.push('/customer/products');
+      history.push('/customer/products');
       console.log(response.data);
     } catch (error) {
       if (error.response.data.message) {
