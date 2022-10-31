@@ -4,6 +4,23 @@ import api from '../services/api';
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const totalPrice = (item, quantityP) => {
+    setTotal(item * quantityP);
+  };
+
+  const addItem = (item, quantityA) => {
+    setQuantity(quantity + 1);
+    totalPrice(Number(item), quantityA);
+  };
+
+  const rmItem = (item, quantityR) => {
+    if (quantity === 0) return false;
+    setQuantity(quantity - 1);
+    totalPrice(Number(item), quantityR);
+  };
 
   useEffect(() => {
     const data = async () => {
@@ -36,6 +53,7 @@ function Products() {
             alt={ item.name }
           />
           <button
+            onClick={ () => addItem(item.price, quantity) }
             data-testid={ `customer_products__button-card-add-item-${item.id}` }
             type="button"
           >
@@ -43,10 +61,13 @@ function Products() {
 
           </button>
           <input
+            onChange={ ({ target: { value } }) => setQuantity(value) }
+            value={ quantity }
             data-testid={ `customer_products__input-card-quantity-${item.id}` }
             type="number"
           />
           <button
+            onClick={ () => rmItem(item.price, quantity) }
             data-testid={ `customer_products__button-card-rm-item-${item.id}` }
             type="button"
           >
@@ -55,6 +76,7 @@ function Products() {
           </button>
         </div>
       )) }
+      <h3>{total}</h3>
     </div>
   );
 }
