@@ -18,8 +18,8 @@ function Login() {
         password,
       });
       setIsUserValid(true);
-      history.push('/customer/products');
       localStorage.setItem('user', JSON.stringify(response.data));
+      history.push('/customer/products');
     } catch (error) {
       if (error.response.data.message) {
         setMessage(error.response.data.message);

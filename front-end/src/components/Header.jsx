@@ -1,7 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function Header() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    history.push('/login');
+  };
+
   return (
     <div>
       <Link
@@ -18,10 +26,11 @@ function Header() {
         Pedidos
 
       </Link>
-      <h4 data-testid="customer_products__element-navbar-user-full-name">Teste</h4>
+      <h4 data-testid="customer_products__element-navbar-user-full-name">{user.name}</h4>
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-logout"
+        onClick={ () => logout() }
       >
         Logout
 
