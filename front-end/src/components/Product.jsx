@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { addToCart, getCartItems, removeItemCart } from '../helpers/userCart';
+// teste lint
 
 function Product({ product }) {
   const [quantity, setQuantity] = useState(0);
