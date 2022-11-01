@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { addToCart, getCartItems, removeItemCart } from '../helpers/userCart';
 
-function Product({ product, totalPrice }) {
+function Product({ product }) {
   const [quantity, setQuantity] = useState(0);
   const { id, name, price, urlImage } = product;
 
-  // const { totalPrice } = total;
-  // console.log(totalPrice);
+  useEffect(() => {
+    const numberItem = () => {
+      const cartItems = getCartItems();
+      const filterCartItems = cartItems.filter((items) => items.id === product.id);
+      setQuantity(filterCartItems.length);
+    };
+    numberItem();
+  }, [product.id]);
 
-  const addItem = (priceAdd, quantityAdd) => {
+  const addItem = () => {
+    addToCart(product);
     setQuantity(quantity + 1);
-    totalPrice(Number(priceAdd), quantityAdd);
   };
 
-  const rmItem = (priceRm, quantityRm) => {
+  const rmItem = () => {
     if (quantity === 0) return false;
+    removeItemCart(product);
     setQuantity(quantity - 1);
-    totalPrice(Number(priceRm), quantityRm);
   };
+
+  // const handleOnChange = (value) => {
+  //   setQuantity(value);
+  //   addToCart(JSON.stringify(product).repeat(value));
+  // };
 
   return (
     <div key={ id }>
@@ -39,7 +51,7 @@ function Product({ product, totalPrice }) {
         alt={ name }
       />
       <button
-        onClick={ () => addItem(price, quantity) }
+        onClick={ () => addItem() }
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
       >
@@ -53,7 +65,7 @@ function Product({ product, totalPrice }) {
         type="number"
       />
       <button
-        onClick={ () => rmItem(price, quantity) }
+        onClick={ () => rmItem() }
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
       >

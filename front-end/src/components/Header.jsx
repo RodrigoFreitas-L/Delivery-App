@@ -7,6 +7,7 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('userCart');
     history.push('/login');
   };
 

@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Product from '../components/Product';
+import { getCartItems } from '../helpers/userCart';
 import api from '../services/api';
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const totalPrice = (item, quantityP) => {
-    setTotal(item * quantityP);
-  };
-
   useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('userCart'))) {
+      localStorage.setItem('userCart', JSON.stringify([]));
+    }
     const data = async () => {
       const response = await api.get('/products');
       setProducts(response.data);
     };
     data();
-  }, []);
+
+    const totalPrice = () => {
+      const cartItems = getCartItems();
+      const priceTotal = cartItems.reduce((totalP, item) => {
+        totalP += Number(item.price);
+        return totalP;
+      }, 0);
+      setTotal(priceTotal.toFixed(2));
+    };
+    totalPrice();
+  });
 
   return (
     <div>
@@ -26,7 +36,6 @@ function Products() {
         <Product
           key={ item.id }
           product={ item }
-          totalPrice={ totalPrice }
         />
       )) }
       <h3>{total}</h3>
