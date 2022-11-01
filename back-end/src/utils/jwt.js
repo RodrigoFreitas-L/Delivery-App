@@ -1,18 +1,17 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const error = require('./error');
+const jwtKey = require('fs')
+  .readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
 
-const { TOKEN_SECRET } = process.env;
+  const jwt = require('jsonwebtoken');
+  const error = require('./error');
+  
+  const jwtConfig = {
+    algorithm: 'HS256',
+    noTimestamp: true,
+  };
 
-const jwtConfig = {
-  expiresIn: '15m',
-  algorithm: 'HS256',
-};
-
-const generateJwtToken = (payload) => ({
-  ...payload,
-  token: jwt.sign({ payload }, TOKEN_SECRET, jwtConfig),
-});
+const generateJwtToken = (payload) =>
+  jwt.sign(payload, jwtKey, jwtConfig);
 
 const authenticateJwtToken = (token) => {
   if (!token) {
@@ -20,7 +19,7 @@ const authenticateJwtToken = (token) => {
   }
 
   try {
-    return jwt.verify(token, TOKEN_SECRET);
+    return jwt.verify(token, jwtKey);
   } catch (e) {
     throw error(401, 'token malformed');
   }

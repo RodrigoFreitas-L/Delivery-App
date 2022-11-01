@@ -6,7 +6,7 @@ function Product({ product, totalPrice }) {
   const { id, name, price, urlImage } = product;
 
   // const { totalPrice } = total;
-  console.log(totalPrice);
+  // console.log(totalPrice);
 
   const addItem = (priceAdd, quantityAdd) => {
     setQuantity(quantity + 1);
@@ -30,7 +30,7 @@ function Product({ product, totalPrice }) {
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        {price}
+        {price.replace('.', ',')}
 
       </p>
       <img

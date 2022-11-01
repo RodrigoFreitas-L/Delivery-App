@@ -19,6 +19,7 @@ function Login() {
       });
       setIsUserValid(true);
       localStorage.setItem('user', JSON.stringify(response.data));
+      console.log(response.data);
       history.push('/customer/products');
     } catch (error) {
       if (error.response.data.message) {
