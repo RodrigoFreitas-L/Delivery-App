@@ -22,10 +22,10 @@ const removeItemCart = (productId) => {
   localStorage.setItem('userCart', JSON.stringify(newCartItems));
 };
 
-const removeItemAll = (productId) => {
+const removeItemAll = (product) => {
   const cartItems = getCartItems();
   const cartItemsFilter = cartItems
-    .filter((element) => element.id !== productId.id);
+    .filter((element) => element.id !== product.id);
   localStorage.setItem('userCart', JSON.stringify(cartItemsFilter));
 };
 
