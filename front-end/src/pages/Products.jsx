@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Product from '../components/Product';
 import { getCartItems } from '../helpers/userCart';
@@ -38,7 +39,15 @@ function Products() {
           product={ item }
         />
       )) }
-      <h3>{total}</h3>
+      <Link to="/customer/checkout">
+        <button
+          type="button"
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          {total}
+
+        </button>
+      </Link>
     </div>
   );
 }
