@@ -27,6 +27,10 @@ function Product({ product }) {
   };
 
   const handleOnChange = (value) => {
+    if (value < 1) {
+      setQuantity(0);
+      return false;
+    }
     const diff = value - quantity;
     if (diff > 0) {
       for (let i = 0; i < diff; i += 1) {
@@ -69,6 +73,7 @@ function Product({ product }) {
 
       </button>
       <input
+        min={ 0 }
         onChange={ ({ target: { value } }) => handleOnChange(value) }
         value={ quantity }
         data-testid={ `customer_products__input-card-quantity-${id}` }
