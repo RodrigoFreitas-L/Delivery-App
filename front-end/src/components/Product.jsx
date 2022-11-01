@@ -26,10 +26,12 @@ function Product({ product }) {
     setQuantity(quantity - 1);
   };
 
-  // const handleOnChange = (value) => {
-  //   setQuantity(value);
-  //   addToCart(JSON.stringify(product).repeat(value));
-  // };
+  const handleOnChange = (value) => {
+    setQuantity(value);
+    for (let i = 0; i < value; i += 1) {
+      addToCart(product);
+    }
+  };
 
   return (
     <div key={ id }>
@@ -59,7 +61,7 @@ function Product({ product }) {
 
       </button>
       <input
-        onChange={ ({ target: { value } }) => setQuantity(value) }
+        onChange={ ({ target: { value } }) => handleOnChange(value) }
         value={ quantity }
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
