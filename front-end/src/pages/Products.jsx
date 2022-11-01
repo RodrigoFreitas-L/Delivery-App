@@ -44,7 +44,7 @@ function Products() {
           type="button"
           data-testid="customer_products__checkout-bottom-value"
         >
-          {total}
+          {total.toString(2).replace('.', ',')}
 
         </button>
       </Link>

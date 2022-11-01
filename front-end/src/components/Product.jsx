@@ -27,10 +27,17 @@ function Product({ product }) {
   };
 
   const handleOnChange = (value) => {
-    setQuantity(value);
-    for (let i = 0; i < value; i += 1) {
-      addToCart(product);
+    const diff = value - quantity;
+    if (diff > 0) {
+      for (let i = 0; i < diff; i += 1) {
+        addToCart(product);
+      }
+    } else {
+      for (let i = 0; i > diff; i -= 1) {
+        removeItemCart(product);
+      }
     }
+    setQuantity(value);
   };
 
   return (
