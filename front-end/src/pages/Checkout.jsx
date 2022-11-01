@@ -85,7 +85,7 @@ function Checkout() {
               { index + 1 }
             </td>
             <td
-              data-testid={ `element-order-table-name-${index}` }
+              data-testid={ `customer_checkout__element-order-table-name-${index}` }
             >
               { item.name }
 
