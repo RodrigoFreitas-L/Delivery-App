@@ -8,7 +8,7 @@ import api from '../services/api';
 function Products() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [cartBtn, setCartBtn] = useState(true);
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem('userCart'))) {
@@ -22,9 +22,9 @@ function Products() {
 
     const disableCheckout = () => {
       if (Number(total) !== 0) {
-        setIsDisabled(false);
+        setCartBtn(false);
       } else {
-        setIsDisabled(true);
+        setCartBtn(true);
       }
     };
 
@@ -49,13 +49,19 @@ function Products() {
           product={ item }
         />
       )) }
+      <h3
+        data-testid="customer_products__checkout-bottom-value"
+      >
+        {total.toString(2).replace('.', ',')}
+
+      </h3>
       <Link to="/customer/checkout">
         <button
           type="button"
-          data-testid="customer_products__checkout-bottom-value"
-          disabled={ isDisabled }
+          data-testid="customer_products__button-cart"
+          disabled={ cartBtn }
         >
-          {total.toString(2).replace('.', ',')}
+          Carrinho
 
         </button>
       </Link>

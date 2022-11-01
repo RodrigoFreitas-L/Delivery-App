@@ -28,6 +28,7 @@ function Product({ product }) {
 
   const handleOnChange = (value) => {
     if (value < 1) {
+      removeItemCart(product);
       setQuantity(0);
       return false;
     }
