@@ -20,13 +20,13 @@ function Header() {
         Produtos
 
       </Link>
-      {/* <Link
+      <Link
         to="/customer/orders"
         data-testid="customer_products__element-navbar-link-orders"
       >
         Pedidos
 
-      </Link> */}
+      </Link>
       <h4 data-testid="customer_products__element-navbar-user-full-name">{user.name}</h4>
       <button
         type="button"
