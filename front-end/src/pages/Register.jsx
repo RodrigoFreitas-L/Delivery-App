@@ -20,13 +20,12 @@ function Register() {
         name,
       });
       setIsUserValid(true);
+      localStorage.setItem('user', JSON.stringify(response.data));
       history.push('/customer/products');
-      console.log(response.data);
     } catch (error) {
       if (error.response.data.message) {
         setMessage(error.response.data.message);
         setIsUserValid(false);
-        console.log(error.response);
       }
     }
   };

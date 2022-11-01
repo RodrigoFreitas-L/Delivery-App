@@ -8,6 +8,7 @@ import api from '../services/api';
 function Products() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem('userCart'))) {
@@ -19,6 +20,14 @@ function Products() {
     };
     data();
 
+    const disableCheckout = () => {
+      if (Number(total) !== 0) {
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(true);
+      }
+    };
+
     const totalPrice = () => {
       const cartItems = getCartItems();
       const priceTotal = cartItems.reduce((totalP, item) => {
@@ -27,6 +36,7 @@ function Products() {
       }, 0);
       setTotal(priceTotal.toFixed(2));
     };
+    disableCheckout();
     totalPrice();
   });
 
@@ -43,6 +53,7 @@ function Products() {
         <button
           type="button"
           data-testid="customer_products__checkout-bottom-value"
+          disabled={ isDisabled }
         >
           {total.toString(2).replace('.', ',')}
 

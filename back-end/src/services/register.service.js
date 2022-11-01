@@ -1,4 +1,5 @@
 const { User } = require('../database/models');
+const { generateJwtToken } = require('../utils/jwt');
 const error = require('../utils/error');
 
 const verify = async (emailP, nameP) => {
@@ -17,8 +18,19 @@ const created = async (user) => {
     throw error(409, 'Usuario já existe');
   }
 
-  const { name, email } = await User.create(user);
-  return { name, email };
+  const newUser = await User.create(user);
+
+  console.log(newUser);
+
+  const userResult = {
+    id: newUser.id,
+    name: newUser.name,
+    email: newUser.email,
+  };
+
+  const token = generateJwtToken(userResult);
+
+  return { ...userResult, token };
 };
 
 module.exports = created;
