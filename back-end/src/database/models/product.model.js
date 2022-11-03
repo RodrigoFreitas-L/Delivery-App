@@ -3,7 +3,7 @@ const productSchema = (sequelize, DataTypes) => {
     id: { autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER },
     name: DataTypes.STRING,
     price: DataTypes.DECIMAL,
-    urlImage: DataTypes.STRING,
+    urlImage: DataTypes.STRING 
   }, {
     tableName: 'products',
     underscored: true,

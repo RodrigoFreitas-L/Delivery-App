@@ -3,25 +3,28 @@ const { User } = require('../database/models');
 const { generateJwtToken } = require('../utils/jwt');
 const error = require('../utils/error');
 
-const authenticate = async ({ email, password }) => {
+const loginAuthenticate = async ({ email, password }) => {
+  const pass = md5(password);
+
   const user = await User.findOne({
-    attributes: ['id', 'name', 'email', 'role', 'password'],
-    where: { email },
+    where: { email, password: pass },
   });
 
-  if (!user || user.password !== md5(password)) {
+  if (!user) {
     throw error(404, 'User not found!');
   }
 
   const userResult = {
+    id: user.id,
     name: user.name,
     email: user.email,
     role: user.role,
   };
 
-  return generateJwtToken(userResult);
+  const token = generateJwtToken(userResult);
+  return { ...userResult, token };
 };
 
 module.exports = {
-  authenticate,
+  loginAuthenticate,
 };

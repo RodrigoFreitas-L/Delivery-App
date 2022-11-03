@@ -1,7 +1,7 @@
 const { authenticateJwtToken } = require('../utils/jwt');
 const error = require('../utils/error');
 
-const authenticateMiddleware = (req, res, next) => {
+const loginAuthenticateMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
   const user = authenticateJwtToken(token);
 
@@ -10,7 +10,7 @@ const authenticateMiddleware = (req, res, next) => {
   return next();
 };
 
-const authValidationMiddleware = (req, _res, next) => {
+const loginValidationMiddleware = (req, _res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -21,6 +21,6 @@ const authValidationMiddleware = (req, _res, next) => {
 };
 
 module.exports = {
-  authenticateMiddleware,
-  authValidationMiddleware,
+  loginAuthenticateMiddleware,
+  loginValidationMiddleware,
 };
