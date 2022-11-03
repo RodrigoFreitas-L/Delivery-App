@@ -135,7 +135,7 @@ function Checkout() {
           .replace('.', ',') }
       </p>
       <div>
-        <DeliveryDetail />
+        <DeliveryDetail total={ total } />
       </div>
     </>
   );
