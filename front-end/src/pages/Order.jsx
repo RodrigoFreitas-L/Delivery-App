@@ -27,9 +27,25 @@ export default function Order() {
           <p data-testid="customer_order_details__element-order-details-label-order-id">
             { `Pedido: ${order.orderId}` }
           </p>
-          <p data-testid="customer_order_details__element-order-details-label-seller-name">Vend: { order.sellerName }</p>
-          <p data-testid="customer_order_details__element-order-details-label-order-date">{ new Date(order.date).toLocaleDateString() }</p>
-          <p data-testid="customer_order_details__element-order-details-label-delivery-status">{ order.status }</p>
+          <p
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            Vend:
+            {' '}
+            { order.sellerName }
+
+          </p>
+          <p data-testid="customer_order_details__element-order-details-label-order-date">
+            { new Date(order.date).toLocaleDateString() }
+
+          </p>
+          <p
+            data-testid="customer
+            _order_details__element-order-details-label-delivery-status"
+          >
+            { order.status }
+
+          </p>
         </div>
         <table border="1">
           <tbody>
@@ -51,45 +67,50 @@ export default function Order() {
               </td>
             </tr>
             { order.products.map((item, index) => (
-            <tr
-              key={ item.id }
-              data-testid={ `customer_order_details__element-order-table-item-number-${index}` }
-            >
-              <td>
-                { index + 1 }
-              </td>
-              <td
-                data-testid={ `customer_order_details__element-order-table-name-${index}` }
+              <tr
+                key={ item.id }
+                data-testid={ `customer
+                _order_details__element-order-table-item-number-${index}` }
               >
-                { item.name }
+                <td>
+                  { index + 1 }
+                </td>
+                <td
+                  data-testid={ `customer
+                  _order_details__element-order-table-name-${index}` }
+                >
+                  { item.name }
 
-              </td>
-              <td
-                data-testid={ `customer_order_details__element-order-table-quantity-${index}` }
-              >
-                { item.quantity }
-              </td>
-              <td
-                data-testid={ `customer_order_details__element-order-table-unit-price-${index}` }
-              >
-                { item.price.replace('.', ',') }
-              </td>
-              <td
-                data-testid={ `customer_order_details__element-order-table-sub-total-${index}` }
-              >
-                {
-                  (Number(item.price) * item.quantity).toFixed(2).replace('.', ',')
-                }
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td
+                  data-testid={ `customer
+                  _order_details__element-order-table-quantity-${index}` }
+                >
+                  { item.quantity }
+                </td>
+                <td
+                  data-testid={ `customer
+                  _order_details__element-order-table-unit-price-${index}` }
+                >
+                  { item.price.replace('.', ',') }
+                </td>
+                <td
+                  data-testid={ `customer
+                  _order_details__element-order-table-sub-total-${index}` }
+                >
+                  {
+                    (Number(item.price) * item.quantity).toFixed(2).replace('.', ',')
+                  }
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-      <p
-        data-testid="customer_order_details__element-order-total-price"
-      >
-        { `Total: ${order.totalPrice.replace('.', ',') }`}
-      </p>
-    </>)
+        <p
+          data-testid="customer_order_details__element-order-total-price"
+        >
+          { `Total: ${order.totalPrice.replace('.', ',')}`}
+        </p>
+      </>)
     : (<h1>Carregando...</h1>);
 }
