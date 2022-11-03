@@ -11,12 +11,17 @@ const userSchema = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  // userTable.associate = (models) => {
-  //   userTable.belongsTo(models.Sale, {
-  //     foreignKey: 'user_id',
-  //     as: 'users',
-  //   });
-  // };
+  userTable.associate = (models) => {
+    userTable.hasMany(models.Sale, {
+      foreignKey: 'user_id',
+      as: 'orders',
+    });
+
+    userTable.hasMany(models.Sale, {
+      foreignKey: 'seller_id',
+      as: 'sales',
+    });
+  };
 
   return userTable;
 };

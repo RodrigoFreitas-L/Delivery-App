@@ -3,7 +3,7 @@ const { User } = require('../database/models');
 const { generateJwtToken } = require('../utils/jwt');
 const error = require('../utils/error');
 
-const authenticate = async ({ email, password }) => {
+const loginAuthenticate = async ({ email, password }) => {
   const pass = md5(password);
 
   const user = await User.findOne({
@@ -26,5 +26,5 @@ const authenticate = async ({ email, password }) => {
 };
 
 module.exports = {
-  authenticate,
+  loginAuthenticate,
 };

@@ -10,22 +10,22 @@ const verify = async (emailP, nameP) => {
   return true;
 };
 
-const created = async (user) => {
+const create = async (user) => {
   const { email: newEmail, name: newName } = user;
   const verifyT = await verify(newEmail, newName);
   
   if (verifyT) {
-    throw error(409, 'Usuario já existe');
+    throw error(409, 'User already exists!');
   }
 
   const newUser = await User.create(user);
-
-  console.log(newUser);
-
+  const findUser = await User.findByPk(newUser.id);
+  
   const userResult = {
-    id: newUser.id,
-    name: newUser.name,
-    email: newUser.email,
+    id: findUser.id,
+    name: findUser.name,
+    email: findUser.email,
+    role: findUser.role,
   };
 
   const token = generateJwtToken(userResult);
@@ -33,4 +33,6 @@ const created = async (user) => {
   return { ...userResult, token };
 };
 
-module.exports = created;
+module.exports = {
+  create,
+};
