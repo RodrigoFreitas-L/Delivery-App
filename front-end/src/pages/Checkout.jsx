@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DeliveryDetail from '../components/DeliveryDetail';
 import Header from '../components/Header';
 import { getCartItems, removeItemAll } from '../helpers/userCart';
 
@@ -133,6 +134,9 @@ function Checkout() {
           .toString(2)
           .replace('.', ',') }
       </p>
+      <div>
+        <DeliveryDetail />
+      </div>
     </>
   );
 }
