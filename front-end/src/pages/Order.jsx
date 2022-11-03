@@ -25,18 +25,18 @@ export default function Order() {
         <h1>Detalhe do Pedido</h1>
         <div>
           <p data-testid="customer_order_details__element-order-details-label-order-id">
-            { `Pedido: ${order.orderId}` }
+            { `Pedido: ${order.id}` }
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-seller-name"
           >
             Vend:
             {' '}
-            { order.sellerName }
+            { order.seller.name }
 
           </p>
           <p data-testid="customer_order_details__element-order-details-label-order-date">
-            { new Date(order.date).toLocaleDateString() }
+            { new Date(order.saleDate).toLocaleDateString() }
 
           </p>
           <p
@@ -86,7 +86,7 @@ export default function Order() {
                   data-testid={ `customer
                   _order_details__element-order-table-quantity-${index}` }
                 >
-                  { item.quantity }
+                  { item.SalesProduct.quantity }
                 </td>
                 <td
                   data-testid={ `customer
@@ -99,7 +99,8 @@ export default function Order() {
                   _order_details__element-order-table-sub-total-${index}` }
                 >
                   {
-                    (Number(item.price) * item.quantity).toFixed(2).replace('.', ',')
+                    (Number(item.price) * item.SalesProduct.quantity)
+                      .toFixed(2).replace('.', ',')
                   }
                 </td>
               </tr>

@@ -15,21 +15,8 @@ const findOrderDetailsByPk = async (orderId) => {
   const order = await orderDetails(orderId);
   
   if (!order) throw error(404, 'Order not exisits!');
- 
-  return {
-    orderId: order.id,
-    customerName: order.customer.name,
-    sellerName: order.seller.name,
-    date: order.saleDate,
-    status: order.status,
-    totalPrice: order.totalPrice,
-    products: order.products.map((product) => ({
-      name: product.name,
-      price: product.price,
-      quantity: product.SalesProduct.quantity,
-      urlImage: product.urlImage,
-    })),
-  };
+
+  return order;
 };
 
 const userOrders = async (userId) => {

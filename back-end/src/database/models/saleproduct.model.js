@@ -4,7 +4,7 @@ const saleProductSchema = (sequelize, DataTypes) => {
     productId: { primaryKey: true, type: DataTypes.INTEGER },
     quantity: DataTypes.INTEGER,
   }, {
-    tableName: 'salesProducts',
+    tableName: 'sales_products',
     underscored: true,
     timestamps: false,
   });
