@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { getUser } from '../helpers/user';
+import getUser from '../helpers/user';
 import { getCartItems } from '../helpers/userCart';
 import api from '../services/api';
 
@@ -29,21 +30,21 @@ export default function DeliveryDetail({ total }) {
     const user = getUser();
     const order = {
       userId: user.id,
-      sellerId: sellerId,
       totalPrice: Number(total),
       deliveryAddress: address,
       deliveryNumber: addressNumber,
+      sellerId,
       products,
     };
 
     const response = await api.post('/checkout', order, {
-      headers: { 'Authorization': user.token },
+      headers: { Authorization: user.token },
     });
 
     const { orderId } = response.data;
 
-    history.push(`/customer/orders/${orderId}`)
-  }
+    history.push(`/customer/orders/${orderId}`);
+  };
 
   useEffect(() => {
     const getSellers = async () => {
@@ -114,3 +115,7 @@ export default function DeliveryDetail({ total }) {
     </div>
   );
 }
+
+DeliveryDetail.propTypes = {
+  total: PropTypes.number,
+}.isRequired;
