@@ -9,12 +9,8 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [cartBtn, setCartBtn] = useState(true);
-  // const history = useHistory();
 
   useEffect(() => {
-    // if (!user()) {
-    //   history.push('/customer/products');
-    // }
     if (!JSON.parse(localStorage.getItem('userCart'))) {
       localStorage.setItem('userCart', JSON.stringify([]));
     }

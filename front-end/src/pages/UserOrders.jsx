@@ -5,7 +5,6 @@ import api from '../services/api';
 import user from '../helpers/user';
 
 export default function UserOrders() {
-  // const history = useHistory();
   const [{ customerOrders }, setState] = useState({
     customerOrders: [],
   });
@@ -21,9 +20,6 @@ export default function UserOrders() {
   }
 
   useEffect(() => {
-    // if (!user()) {
-    //   history.push('/login');
-    // }
     api.get(`customer/orders?userId=${user().id}`).then((response) => {
       setState((state) => ({
         ...state,

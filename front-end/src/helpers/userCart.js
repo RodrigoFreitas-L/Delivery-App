@@ -1,7 +1,3 @@
-if (!JSON.parse(localStorage.getItem('userCart'))) {
-  localStorage.setItem('userCart', JSON.stringify([]));
-}
-
 const getCartItems = () => JSON.parse(localStorage.getItem('userCart'));
 
 const addToCart = (product) => {

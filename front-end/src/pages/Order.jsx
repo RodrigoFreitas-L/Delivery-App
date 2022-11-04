@@ -9,11 +9,8 @@ export default function Order() {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      console.log('oi');
       const response = await api.get(`/customer/orders/${params.id}`);
-      console.log('opa');
       setOrder(response.data);
-      console.log(response.data);
     };
     fetchOrder();
   }, []);
