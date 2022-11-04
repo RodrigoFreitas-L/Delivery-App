@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import api from '../services/api';
+import user from '../helpers/user';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -48,6 +49,9 @@ function Login() {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    if (user()) {
+      history.push('/customer/products');
+    }
     setLoginBtn(!isEmailValid(email) || !isPwValid(password));
   }, [email, password, invalidEmail, isUserValid]);
 
