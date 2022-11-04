@@ -13,8 +13,6 @@ import UserOrders from '../pages/UserOrders';
 function Routes() {
   function renderRouter(props) {
     if (user()) {
-      // console.log('ok');
-      // history.push('/customer/products');
       return <Redirect to="/customer/products" />;
     }
     return <Login { ...props } />;

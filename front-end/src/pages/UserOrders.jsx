@@ -48,7 +48,7 @@ export default function UserOrders() {
               <div
                 data-testid={ `customer_orders__element-order-date-${id}` }
               >
-                {dataAtualFormatada(saleDate)}
+                {dataAtualFormatada(saleDate.replace('.', ','))}
               </div>
               <div
                 data-testid={ `customer_orders__element-card-price-${id}` }
