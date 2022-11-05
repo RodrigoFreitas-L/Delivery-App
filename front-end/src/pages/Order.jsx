@@ -22,26 +22,30 @@ export default function Order() {
         <h1>Detalhe do Pedido</h1>
         <div>
           <p data-testid="customer_order_details__element-order-details-label-order-id">
-            { `Pedido: ${order.id}` }
+            {`Pedido: ${order.id}`}
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-seller-name"
           >
             Vend:
             {' '}
-            { order.seller.name }
+            {order.seller.name}
 
           </p>
           <p data-testid="customer_order_details__element-order-details-label-order-date">
-            { new Date(order.saleDate).toLocaleDateString() }
+            {new Date(order.saleDate).toLocaleDateString()}
 
           </p>
           <p
-            data-testid="customer
-            _order_details__element-order-details-label-delivery-status"
+            data-testid={ `customer
+            _order_details__element-order-details-label-delivery-status${order.id}` }
           >
-            { order.status }
-
+            {order.status}
+          </p>
+          <p
+            data-testid="customer_order_details__button-delivery-check"
+          >
+            <button type="button" disabled>Marcar como entregue</button>
           </p>
         </div>
         <table border="1">
@@ -63,33 +67,33 @@ export default function Order() {
                 sub-total
               </td>
             </tr>
-            { order.products.map((item, index) => (
+            {order.products.map((item, index) => (
               <tr
                 key={ item.id }
                 data-testid={ `customer
                 _order_details__element-order-table-item-number-${index}` }
               >
                 <td>
-                  { index + 1 }
+                  {index + 1}
                 </td>
                 <td
                   data-testid={ `customer
                   _order_details__element-order-table-name-${index}` }
                 >
-                  { item.name }
+                  {item.name}
 
                 </td>
                 <td
                   data-testid={ `customer
                   _order_details__element-order-table-quantity-${index}` }
                 >
-                  { item.SalesProduct.quantity }
+                  {item.SalesProduct.quantity}
                 </td>
                 <td
                   data-testid={ `customer
                   _order_details__element-order-table-unit-price-${index}` }
                 >
-                  { item.price.replace('.', ',') }
+                  {item.price.replace('.', ',')}
                 </td>
                 <td
                   data-testid={ `customer
@@ -107,7 +111,7 @@ export default function Order() {
         <p
           data-testid="customer_order_details__element-order-total-price"
         >
-          { `Total: ${order.totalPrice.replace('.', ',')}`}
+          {`Total: ${order.totalPrice.replace('.', ',')}`}
         </p>
       </>)
     : (<h1>Carregando...</h1>);
