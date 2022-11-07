@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 // import PrivateRoute from './PrivateRoute';
-import user from '../helpers/user';
+import getUser from '../helpers/user';
 
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -12,10 +12,17 @@ import UserOrders from '../pages/UserOrders';
 
 function Routes() {
   function renderRouter(props) {
-    if (user()) {
-      return <Redirect to="/customer/products" />;
+    const user = getUser();
+    switch (user?.role) {
+      case 'customer':
+        return <Redirect to="/customer/products" />;
+      case 'seller':
+        return <Redirect to="/seller/orders" />;
+      case 'administrator':
+        return <Redirect to="/admin/manage" />;
+      default:
+        return <Login { ...props } />;
     }
-    return <Login { ...props } />;
   }
   return (
     <Switch>

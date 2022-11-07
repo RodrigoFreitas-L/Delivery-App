@@ -12,6 +12,20 @@ function Login() {
   const [message, setMessage] = useState('');
   const history = useHistory();
 
+  const redirect = (user) => {
+    switch(user.role) {
+      case 'customer':
+        history.push('/customer/products');
+        break;
+      case 'seller':
+        history.push('/seller/orders');
+        break;
+      case 'administrator':
+        history.push('/admin/manage');
+        break;
+    }
+  };
+
   const submitLogin = async () => {
     try {
       const response = await api.post('/login', {
@@ -19,9 +33,9 @@ function Login() {
         password,
       });
       setIsUserValid(true);
-      localStorage.setItem('user', JSON.stringify(response.data));
-      console.log(response.data);
-      history.push('/customer/products');
+      const user = response.data;
+      localStorage.setItem('user', JSON.stringify(user));
+      redirect(user);
     } catch (error) {
       if (error.response.data.message) {
         setMessage(error.response.data.message);
