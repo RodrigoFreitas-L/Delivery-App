@@ -9,6 +9,7 @@ import Products from '../pages/Products';
 import Checkout from '../pages/Checkout';
 import Order from '../pages/Order';
 import UserOrders from '../pages/UserOrders';
+import SellerOrders from '../pages/SellerOrders';
 
 function Routes() {
   function renderRouter(props) {
@@ -35,6 +36,7 @@ function Routes() {
       <Route exact path="/customer/checkout" component={ Checkout } />
       <Route exact path="/customer/orders/:id" component={ Order } />
       <Route exact path="/customer/orders" component={ UserOrders } />
+      <Route exact path="/seller/orders" component={ SellerOrders } />
     </Switch>
 
   );
