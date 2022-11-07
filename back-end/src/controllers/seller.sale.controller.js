@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { status } = req.body;
-  const saleDetails = await sellerSaleService.updateSaleStatusByPk(req.params.id, status);
+  await sellerSaleService.updateSaleStatusByPk(req.params.id, status);
   return res.status(204).send();
 });
 

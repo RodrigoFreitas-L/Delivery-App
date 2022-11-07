@@ -16,14 +16,14 @@ function Routes() {
   function renderRouter(props) {
     const user = getUser();
     switch (user?.role) {
-      case 'customer':
-        return <Redirect to="/customer/products" />;
-      case 'seller':
-        return <Redirect to="/seller/orders" />;
-      case 'administrator':
-        return <Redirect to="/admin/manage" />;
-      default:
-        return <Login { ...props } />;
+    case 'customer':
+      return <Redirect to="/customer/products" />;
+    case 'seller':
+      return <Redirect to="/seller/orders" />;
+    case 'administrator':
+      return <Redirect to="/admin/manage" />;
+    default:
+      return <Login { ...props } />;
     }
   }
   return (

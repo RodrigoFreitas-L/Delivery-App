@@ -31,40 +31,41 @@ export default function SellerOrders() {
   return (
     <>
       <Header />
-      {sellerOrders.map(({ id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber }) => (
-        <Link to={ `/seller/orders/${id}` } key={ id }>
-          <div className="card">
-            <div
-              data-testid={ `seller_orders__element-order-id-${id}` }
-            >
-              {id}
-            </div>
-            <div
-              data-testid={ `seller_orders__element-delivery-status-${id}` }
-            >
-              {status}
-            </div>
+      {sellerOrders
+        .map(({ id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber }) => (
+          <Link to={ `/seller/orders/${id}` } key={ id }>
+            <div className="card">
+              <div
+                data-testid={ `seller_orders__element-order-id-${id}` }
+              >
+                {id}
+              </div>
+              <div
+                data-testid={ `seller_orders__element-delivery-status-${id}` }
+              >
+                {status}
+              </div>
 
-            <div
-              data-testid={ `seller_orders__element-card-address-${id}` }
-            >
-              {`${deliveryAddress}, ${deliveryNumber}`}
-            </div>
-            <div className="card-date-price">
               <div
-                data-testid={ `seller_orders__element-order-date-${id}` }
+                data-testid={ `seller_orders__element-card-address-${id}` }
               >
-                {dataAtualFormatada(saleDate)}
+                {`${deliveryAddress}, ${deliveryNumber}`}
               </div>
-              <div
-                data-testid={ `seller_orders__element-card-price-${id}` }
-              >
-                {totalPrice.replace('.', ',')}
+              <div className="card-date-price">
+                <div
+                  data-testid={ `seller_orders__element-order-date-${id}` }
+                >
+                  {dataAtualFormatada(saleDate)}
+                </div>
+                <div
+                  data-testid={ `seller_orders__element-card-price-${id}` }
+                >
+                  {totalPrice.replace('.', ',')}
+                </div>
               </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
     </>
   );
 }

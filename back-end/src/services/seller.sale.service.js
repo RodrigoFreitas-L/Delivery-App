@@ -47,7 +47,7 @@ const updateSaleStatusByPk = async (id, status) => {
   const response = await Sale.update({ status }, { where: { id } });
 
   return response;
-}
+};
 
 module.exports = {
   findUserSalesByPk,

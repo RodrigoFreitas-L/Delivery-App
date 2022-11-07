@@ -17,21 +17,20 @@ export default function Order() {
       setOrder(response.data);
 
       switch (response.data.status) {
-        case 'Pendente':
-          setPreparingBtnDisabled(false);
-          setDispatchBtnDisabled(true);
-          break;
-        case 'Preparando':
-          setPreparingBtnDisabled(true);
-          setDispatchBtnDisabled(false);
-          break;
-        default:
-          setPreparingBtnDisabled(true);
-          setDispatchBtnDisabled(true);
+      case 'Pendente':
+        setPreparingBtnDisabled(false);
+        setDispatchBtnDisabled(true);
+        break;
+      case 'Preparando':
+        setPreparingBtnDisabled(true);
+        setDispatchBtnDisabled(false);
+        break;
+      default:
+        setPreparingBtnDisabled(true);
+        setDispatchBtnDisabled(true);
       }
     };
     fetchOrder();
-    
   }, [count]);
 
   async function setPreparingOrder() {
@@ -74,7 +73,7 @@ export default function Order() {
           <button
             data-testid={ `${prefix}button-preparing-check` }
             type="button"
-            disabled={preparingBtnDisabled}
+            disabled={ preparingBtnDisabled }
             onClick={ () => setPreparingOrder() }
           >
             Preparar pedido
@@ -82,7 +81,7 @@ export default function Order() {
           <button
             data-testid={ `${prefix}button-dispatch-check` }
             type="button"
-            disabled={dispatchBtnDisabled}
+            disabled={ dispatchBtnDisabled }
             onClick={ () => setDispatchOrder() }
           >
             Saiu para entrega

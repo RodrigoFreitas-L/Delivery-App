@@ -13,16 +13,18 @@ function Login() {
   const history = useHistory();
 
   const redirect = (user) => {
-    switch(user.role) {
-      case 'customer':
-        history.push('/customer/products');
-        break;
-      case 'seller':
-        history.push('/seller/orders');
-        break;
-      case 'administrator':
-        history.push('/admin/manage');
-        break;
+    switch (user.role) {
+    case 'customer':
+      history.push('/customer/products');
+      break;
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+    case 'administrator':
+      history.push('/admin/manage');
+      break;
+    default:
+      throw new Error('Role invalid');
     }
   };
 
