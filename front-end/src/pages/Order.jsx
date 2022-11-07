@@ -4,19 +4,27 @@ import Header from '../components/Header';
 import api from '../services/api';
 
 export default function Order() {
+  const prefix = 'customer_order_details__';
   const params = useParams();
   const [order, setOrder] = useState();
 
   useEffect(() => {
     const fetchOrder = async () => {
-      console.log('oi');
       const response = await api.get(`/customer/orders/${params.id}`);
-      console.log('opa');
       setOrder(response.data);
-      console.log(response.data);
     };
     fetchOrder();
   }, []);
+
+  function dataAtualFormatada(date) {
+    const data = new Date(date);
+    const dia = data.getDate().toString();
+    const diaF = (dia.length === 1) ? `0${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+    const mesF = (mes.length === 1) ? `0${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}/${mesF}/${anoF}`;
+  }
 
   return order
     ? (
@@ -25,27 +33,32 @@ export default function Order() {
         <h1>Detalhe do Pedido</h1>
         <div>
           <p data-testid="customer_order_details__element-order-details-label-order-id">
-            { `Pedido: ${order.id}` }
+            {`Pedido: ${order.id}`}
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-seller-name"
           >
             Vend:
             {' '}
-            { order.seller.name }
+            {order.seller.name}
 
           </p>
           <p data-testid="customer_order_details__element-order-details-label-order-date">
-            { new Date(order.saleDate).toLocaleDateString() }
-
+            {dataAtualFormatada(order.saleDate)}
           </p>
           <p
-            data-testid="customer
-            _order_details__element-order-details-label-delivery-status"
+            data-testid={ `${prefix}element-order-details-label-delivery-status` }
           >
-            { order.status }
-
+            {order.status}
           </p>
+          <button
+            data-testid="customer_order_details__button-delivery-check"
+            type="button"
+            disabled
+          >
+            Marcar como entregue
+          </button>
+
         </div>
         <table border="1">
           <tbody>
@@ -66,37 +79,32 @@ export default function Order() {
                 sub-total
               </td>
             </tr>
-            { order.products.map((item, index) => (
+            {order.products.map((item, index) => (
               <tr
                 key={ item.id }
-                data-testid={ `customer
-                _order_details__element-order-table-item-number-${index}` }
+                data-testid={ `${prefix}element-order-table-item-number-${index}` }
               >
                 <td>
-                  { index + 1 }
+                  {index + 1}
                 </td>
                 <td
-                  data-testid={ `customer
-                  _order_details__element-order-table-name-${index}` }
+                  data-testid={ `${prefix}element-order-table-name-${index}` }
                 >
-                  { item.name }
+                  {item.name}
 
                 </td>
                 <td
-                  data-testid={ `customer
-                  _order_details__element-order-table-quantity-${index}` }
+                  data-testid={ `${prefix}element-order-table-quantity-${index}` }
                 >
-                  { item.SalesProduct.quantity }
+                  {item.SalesProduct.quantity}
                 </td>
                 <td
-                  data-testid={ `customer
-                  _order_details__element-order-table-unit-price-${index}` }
+                  data-testid={ `${prefix}element-order-table-unit-price-${index}` }
                 >
-                  { item.price.replace('.', ',') }
+                  {item.price.replace('.', ',')}
                 </td>
                 <td
-                  data-testid={ `customer
-                  _order_details__element-order-table-sub-total-${index}` }
+                  data-testid={ `${prefix}element-order-table-sub-total-${index}` }
                 >
                   {
                     (Number(item.price) * item.SalesProduct.quantity)
@@ -110,7 +118,7 @@ export default function Order() {
         <p
           data-testid="customer_order_details__element-order-total-price"
         >
-          { `Total: ${order.totalPrice.replace('.', ',')}`}
+          {`Total: ${order.totalPrice.replace('.', ',')}`}
         </p>
       </>)
     : (<h1>Carregando...</h1>);

@@ -43,6 +43,8 @@ export default function DeliveryDetail({ total }) {
 
     const { orderId } = response.data;
 
+    localStorage.removeItem('userCart');
+
     history.push(`/customer/orders/${orderId}`);
   };
 
