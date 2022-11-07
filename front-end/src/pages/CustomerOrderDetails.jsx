@@ -3,44 +3,22 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import api from '../services/api';
 
-export default function Order() {
-  const prefix = 'seller_order_details__';
+export default function CustomerOrderDetails() {
+  const prefix = 'customer_order_details__';
   const params = useParams();
   const [order, setOrder] = useState();
-  const [preparingBtnDisabled, setPreparingBtnDisabled] = useState(true);
-  const [dispatchBtnDisabled, setDispatchBtnDisabled] = useState(true);
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const response = await api.get(`/seller/orders/${params.id}`);
+      const response = await api.get(`/customer/orders/${params.id}`);
       setOrder(response.data);
-
-      switch (response.data.status) {
-        case 'Pendente':
-          setPreparingBtnDisabled(false);
-          setDispatchBtnDisabled(true);
-          break;
-        case 'Preparando':
-          setPreparingBtnDisabled(true);
-          setDispatchBtnDisabled(false);
-          break;
-        default:
-          setPreparingBtnDisabled(true);
-          setDispatchBtnDisabled(true);
-      }
     };
     fetchOrder();
-    
   }, [count]);
 
-  async function setPreparingOrder() {
-    await api.put(`/seller/orders/${params.id}`, { status: 'Preparando' });
-    setCount(count + 1);
-  }
-
-  async function setDispatchOrder() {
-    await api.put(`/seller/orders/${params.id}`, { status: 'Em Trânsito' });
+  async function setDeliveredOrder() {
+    await api.put(`/seller/orders/${params.id}`, { status: 'Entregue' });
     setCount(count + 1);
   }
 
@@ -60,10 +38,18 @@ export default function Order() {
         <Header />
         <h1>Detalhe do Pedido</h1>
         <div>
-          <p data-testid={ `${prefix}element-order-details-label-order-id` }>
+          <p data-testid="customer_order_details__element-order-details-label-order-id">
             {`Pedido: ${order.id}`}
           </p>
-          <p data-testid={ `${prefix}element-order-details-label-order-date` }>
+          <p
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            Vend:
+            {' '}
+            {order.seller.name}
+
+          </p>
+          <p data-testid="customer_order_details__element-order-details-label-order-date">
             {dataAtualFormatada(order.saleDate)}
           </p>
           <p
@@ -72,20 +58,12 @@ export default function Order() {
             {order.status}
           </p>
           <button
-            data-testid={ `${prefix}button-preparing-check` }
+            data-testid="customer_order_details__button-delivery-check"
             type="button"
-            disabled={preparingBtnDisabled}
-            onClick={ () => setPreparingOrder() }
+            disabled={ order.status !== 'Em Trânsito' }
+            onClick={ () => setDeliveredOrder() }
           >
-            Preparar pedido
-          </button>
-          <button
-            data-testid={ `${prefix}button-dispatch-check` }
-            type="button"
-            disabled={dispatchBtnDisabled}
-            onClick={ () => setDispatchOrder() }
-          >
-            Saiu para entrega
+            Marcar como entregue
           </button>
 
         </div>
@@ -145,7 +123,7 @@ export default function Order() {
           </tbody>
         </table>
         <p
-          data-testid={ `${prefix}element-order-total-price` }
+          data-testid="customer_order_details__element-order-total-price"
         >
           {`Total: ${order.totalPrice.replace('.', ',')}`}
         </p>
