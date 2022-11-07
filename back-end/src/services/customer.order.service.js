@@ -14,7 +14,7 @@ const orderDetails = async (orderId) => (
 const findOrderDetailsByPk = async (orderId) => {
   const order = await orderDetails(orderId);
   
-  if (!order) throw error(404, 'Order not exisits!');
+  if (!order) throw error(404, 'Order not exists!');
 
   return order;
 };
@@ -32,7 +32,7 @@ const userOrders = async (userId) => {
   });
 
   if (!userId || user.role === 'administrator' || user.role === 'seller') {
-    throw error(404, 'User not exisits!');
+    throw error(404, 'User not exists!');
   }
 
   return user;
