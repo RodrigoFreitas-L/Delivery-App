@@ -8,6 +8,12 @@ router.get('/:id', async (req, res) => {
   return res.status(200).json(saleDetails);
 });
 
+router.put('/:id', async (req, res) => {
+  const { status } = req.body;
+  await sellerSaleService.updateSaleStatusByPk(req.params.id, status);
+  return res.status(204).send();
+});
+
 router.get('/', async (req, res) => {
   const userOrders = await sellerSaleService.findUserSalesByPk(req.query.userId);
   return res.status(200).json(userOrders);

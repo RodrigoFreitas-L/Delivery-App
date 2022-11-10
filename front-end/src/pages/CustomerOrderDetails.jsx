@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import api from '../services/api';
 
-export default function Order() {
+export default function CustomerOrderDetails() {
   const prefix = 'customer_order_details__';
   const params = useParams();
   const [order, setOrder] = useState();
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -14,7 +15,12 @@ export default function Order() {
       setOrder(response.data);
     };
     fetchOrder();
-  }, []);
+  }, [count]);
+
+  async function setDeliveredOrder() {
+    await api.put(`/seller/orders/${params.id}`, { status: 'Entregue' });
+    setCount(count + 1);
+  }
 
   function dataAtualFormatada(date) {
     const data = new Date(date);
@@ -54,7 +60,8 @@ export default function Order() {
           <button
             data-testid="customer_order_details__button-delivery-check"
             type="button"
-            disabled
+            disabled={ order.status !== 'Em Trânsito' }
+            onClick={ () => setDeliveredOrder() }
           >
             Marcar como entregue
           </button>

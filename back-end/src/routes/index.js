@@ -17,6 +17,6 @@ router.use('/products', productController);
 router.use('/sellers', sellerController);
 router.use('/checkout', checkoutController);
 router.use('/customer/orders', customerOrderController);
-router.use('/seller/sales', sellerSaleController);
+router.use('/seller/orders', sellerSaleController);
 
 module.exports = router;
